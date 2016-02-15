@@ -1,0 +1,17 @@
+import smtplib
+import argparse
+parser = argparse.ArgumentParser(description='take ')
+parser.add_argument('--sender', '-s', type=str, default='epetukone@gmail.com', help='send letter to email')
+parser.add_argument('--receiver', '-r', type=str, default='www.heretic@inbox.ru', help='send letter from email')
+parser.add_argument('--subject', '-b', type=str, default='home-task3', help='subject')
+parser.add_argument('--text', '-t', type=str, default='Hello, this is your boss', help='message text')
+parser.add_argument('--smtphost', '-o', type=str, default='smtp.gmail.com', help='SMTP server')
+parser.add_argument('--smtpport', '-p', type=int, default=587, help='SMTP port')
+args_parsed = parser.parse_args()
+args_parsed = vars(args_parsed)
+send_letter = 'subject: ' + (args_parsed['subject']) +'\n\n'+ (args_parsed['text'])
+smtp_obj = smtplib.SMTP((args_parsed['smtphost']), (args_parsed['smtpport']))
+smtp_obj.starttls()
+smtp_obj.login('epetukone@gmail.com', '******')
+smtp_obj.sendmail((args_parsed['sender']), (args_parsed['receiver']), send_letter)
+smtp_obj.quit()
